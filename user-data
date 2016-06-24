@@ -1,0 +1,29 @@
+#cloud-config
+password: password
+chpasswd: { expire: False }
+ssh_pwauth: True
+
+# upgrade packages on startup
+package_upgrade: false
+
+packages:
+  - openssh-server
+  - silversearcher-ag
+  - ubuntu-fan
+
+runcmd:
+  - usermod -G lxd -a ubuntu
+  - usermod -G docker -a ubuntu
+  - update-alternatives --set editor /usr/bin/vim.basic
+  - dpkg-reconfigure -p high lxd
+
+write_files:
+  - path: /home/ubuntu/helpme
+    content: |
+      chown -R ubuntu:ubuntu /home/ubuntu
+      lxc remote add spicy 192.168.1.64 --accept-certificate --password=lxd
+      lxc image copy spicy:xenial local: --alias=xenial
+      lxc image copy spicy:xenial local: --alias=fanatic-test
+      chown -R ubuntu:ubuntu /home/ubuntu
+      apt-get install -y docker.io
+      usermod -G docker -a ubuntu
