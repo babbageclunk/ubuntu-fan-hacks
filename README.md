@@ -23,7 +23,7 @@ because I don't recall where).
 ## Make hostnames resolvable:
 
 ```
-$ cat /etc/NetworkManager/dnsmasq.d/fan.conf 
+$ cat /etc/NetworkManager/dnsmasq.d/fan.conf
 server=/fan/172.30.0.1
 ```
 
@@ -35,20 +35,36 @@ $ virsh net-dumpxml fan
   <name>fan</name>
   <uuid>fedc1cbe-5ae1-4d7c-937e-4d79252fb98e</uuid>
   <forward mode='nat'>
-    <nat>
-      <port start='1024' end='65535'/>
-    </nat>
+	<nat>
+	  <port start='1024' end='65535'/>
+	</nat>
   </forward>
   <bridge name='virbr4' stp='on' delay='0'/>
   <mac address='52:54:00:00:54:d0'/>
   <domain name='fan' localOnly='yes'/>
   <dns>
-    <forwarder addr='192.168.1.1'/>
+	<forwarder addr='192.168.1.1'/>
   </dns>
   <ip address='172.30.0.1' netmask='255.255.0.0'>
-    <dhcp>
-      <range start='172.30.128.0' end='172.30.255.254'/>
-    </dhcp>
+	<dhcp>
+	  <range start='172.30.128.0' end='172.30.255.254'/>
+	</dhcp>
   </ip>
 </network>
+```
+
+## Docker images (including network utilities)
+
+```
+$ docker pull frobware/ubuntu
+$ docker tag frobware/ubuntu ubuntu
+```
+
+We tag that as `ubuntu` so that `fanatic` will just work. The
+`frobware/ubuntu` image has the following networking utilities
+installed:
+
+```
+apt-get -y update
+apt-get -y install iputils-ping traceroute net-tools iproute2
 ```
