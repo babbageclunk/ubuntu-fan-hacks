@@ -1,0 +1,16 @@
+instance-id: IID-UUID
+hostname: HOSTNAME
+local-hostname: HOSTNAME
+fqdn: HOSTNAME.fan
+manage_etc_hosts: false
+preserve_hostname: true
+network: {config: disabled}
+network-interfaces: |
+  auto ens3
+  iface ens3 inet dhcp
+  auto ens4
+  iface ens4 inet dhcp
+  auto ens5
+  iface ens5 inet dhcp
+  auto ens6
+  iface ens6 inet dhcp

@@ -1,6 +1,6 @@
 # ubuntu-fan-hacks
 
-Some notes on for experimenting with the `ubuntu-fan` package.
+Some notes for experimenting with the `ubuntu-fan` package.
 
 ## Network bridge
 
