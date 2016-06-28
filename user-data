@@ -23,6 +23,11 @@ packages:
   - silversearcher-ag
   - ubuntu-fan
 
+# fan:
+#   config: |
+#     # fan 240
+#     172.30.0.0/16 250.0.0.0/8 --dhcp --enable
+
 write_files:
   - path: /var/tmp/fan-250-user.user-data
     content: |
