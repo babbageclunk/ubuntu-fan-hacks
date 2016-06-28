@@ -9,9 +9,6 @@
   <bridge name='virbr4' stp='on' delay='0'/>
   <mac address='52:54:00:00:54:d0'/>
   <domain name='fan' localOnly='yes'/>
-  <dns>
-    <forwarder addr='192.168.1.1'/>
-  </dns>
   <ip address='172.30.0.1' netmask='255.255.0.0'>
     <dhcp>
       <range start='172.30.128.0' end='172.30.255.254'/>
