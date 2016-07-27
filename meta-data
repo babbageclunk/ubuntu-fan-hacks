@@ -1,12 +1,12 @@
 instance-id: IID-UUID
 hostname: HOSTNAME
 local-hostname: HOSTNAME
-fqdn: HOSTNAME.maas
+fqdn: HOSTNAME.maas2
 manage_etc_hosts: false
 preserve_hostname: true
 network: {config: disabled}
 network-interfaces: |
-  auto eth0
-  iface eth0 inet static
-      address 192.168.100.2/24
-      gateway 192.168.100.1
+  auto ens3
+  iface ens3 inet static
+      address 192.168.150.2/24
+      gateway 192.168.150.1
