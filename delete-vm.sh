@@ -2,7 +2,7 @@
 
 for i in "$@"; do
     virsh pool-refresh default
-    name=fan-vm-${i}
+    name=vm-${i}
     virsh destroy $name || true
     virsh undefine $name || true
     virsh pool-refresh default

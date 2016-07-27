@@ -12,7 +12,6 @@ chpasswd:
 
 ssh_pwauth: True
 disable_root: false
-ssh_import_id: [frobware]
 
 # upgrade packages on startup
 package_upgrade: false
@@ -21,47 +20,27 @@ packages:
   - eatmydata
   - openssh-server
   - silversearcher-ag
-  - ubuntu-fan
-
-# fan:
-#   config: |
-#     # fan 240
-#     172.30.0.0/16 250.0.0.0/8 --dhcp --enable
 
 write_files:
   - path: /var/tmp/fan-250-user.user-data
     content: |
       #cloud-config
-      ssh_import_id: [frobware]
       package_upgrade: false
-  - path: /var/tmp/docker-workaround-cloud-init
-    content: |
-      apt-get install -y docker.io
-      usermod -G docker -a ubuntu
-  - path: /var/tmp/lxd-workaround-cloud-init
-    content: |
-      usermod -G lxd -a ubuntu
-      lxc remote add vmhost 172.30.0.1 --accept-certificate --password=lxd
-      lxc image copy vmhost:xenial local: --alias=xenial
-      lxc image copy vmhost:xenial local: --alias=fanatic-test
-      chown -R ubuntu:ubuntu /home/ubuntu
   - path: /etc/cloud/cloud.cfg.d/99-cloud-init-no-netconfig.cfg
     content: |
       network: {config: disabled}
   - path: /etc/apt/apt.conf.d/02apt-cacher
     content: |
-      Acquire::http { Proxy "http://172.30.0.1:3142"; };
+      Acquire::http { Proxy "http://192.168.100.1:3142"; };
+  - path: /etc/resolvconf/resolv.conf.d/head
+    content: |
+      nameserver 192.168.100.1
 
 package_reboot_if_required: true
 
 runcmd:
   - for i in /usr/bin/apt*; do ln -s /usr/bin/eatmydata /usr/local/bin/$(basename $i); done
   - update-alternatives --set editor /usr/bin/vim.basic
-  - fanatic enable-fan -u 172.30.0.0/16 -o 250.0.0.0/8
-  - fanatic enable-lxd -u 172.30.0.0/16 -o 250.0.0.0/8
-  - 'cat /var/tmp/fan-250-user.user-data | lxc profile set fan-250 user.user-data -'
-  - "a=$(ip -4 addr show dev fan-250 | grep 'inet' | awk '{print $2}' | sed s'!/8!!' | head -n1)"
-  - 'echo "nameserver $a" >> /etc/resolvconf/resolv.conf.d/head'
 
 power_state:
   mode: reboot

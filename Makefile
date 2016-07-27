@@ -1,9 +1,7 @@
 .PHONY: all
 
 CONFIG_DRIVES :=					\
-	fan-vm-1-config.iso			\
-	fan-vm-2-config.iso			\
-	fan-vm-3-config.iso
+	vm-co-19-config.iso
 
 IMAGE_DIR := /var/lib/libvirt/images
 
