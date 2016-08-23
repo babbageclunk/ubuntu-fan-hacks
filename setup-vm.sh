@@ -3,7 +3,7 @@
 set -e
 
 for i in "$@"; do
-    name=vm-${i}
+    name=${i}
     virsh pool-refresh default
     virsh vol-clone --pool default xenial-server-cloudimg-amd64-disk1.img ${name}.img
     virsh vol-resize --pool default ${name}.img +10G
