@@ -1,7 +1,7 @@
 .PHONY: all
 
 CONFIG_DRIVES :=					\
-	vm-co-19-config.iso
+	m19-co-config.iso
 
 IMAGE_DIR := /var/lib/libvirt/images
 
